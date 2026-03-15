@@ -51,12 +51,11 @@ def get_vertical_fraction(num, den, color="#333", is_bold=True):
 
 def lcm_multiple(*args):
     res = args[0]
-    for i in args[1:]:
-        res = abs(res * i) // math.gcd(res, i)
+    for i in args[1:]: res = abs(res * i) // math.gcd(res, i)
     return res
 
 # ==========================================
-# 2. ฐานข้อมูลหัวข้อข้อสอบแข่งขัน (TMC 27 หัวข้อล้วน)
+# 2. ฐานข้อมูลหัวข้อข้อสอบแข่งขัน (TMC 27 หัวข้อเพียวๆ)
 # ==========================================
 core_topics = [
     "อัตราส่วนอายุ", 
@@ -71,47 +70,24 @@ core_topics = [
 
 comp_db = {
     "ระดับประถมต้น (ป.1 - ป.2)": core_topics + [
-        "สัตว์ปีนบ่อ", 
-        "ตรรกะตาชั่งสมดุล", 
-        "ปัญหาผลรวม-ผลต่าง", 
-        "แถวคอยแบบซ้อนทับ", 
-        "คิววงกลมมรณะ", 
-        "การคิดย้อนกลับ", 
-        "โปรโมชั่นแลกของ"
+        "สัตว์ปีนบ่อ", "ตรรกะตาชั่งสมดุล", "ปัญหาผลรวม-ผลต่าง", 
+        "แถวคอยแบบซ้อนทับ", "คิววงกลมมรณะ", "การคิดย้อนกลับ", "โปรโมชั่นแลกของ"
     ],
     "ระดับประถมกลาง (ป.3 - ป.4)": core_topics + [
-        "สัตว์ปีนบ่อ", 
-        "ตรรกะตาชั่งสมดุล", 
-        "ปัญหาผลรวม-ผลต่าง", 
-        "แถวคอยแบบซ้อนทับ", 
-        "คิววงกลมมรณะ", 
-        "ตรรกะการจับมือ (ทักทาย)", 
-        "โปรโมชั่นแลกของ", 
-        "หยิบของในที่มืด", 
-        "การคิดย้อนกลับ", 
-        "แผนภาพความชอบ", 
-        "ผลบวกจำนวนเรียงกัน (Gauss)", 
-        "เศษส่วนของที่เหลือ"
+        "สัตว์ปีนบ่อ", "ตรรกะตาชั่งสมดุล", "ปัญหาผลรวม-ผลต่าง", "แถวคอยแบบซ้อนทับ", 
+        "คิววงกลมมรณะ", "ตรรกะการจับมือ (ทักทาย)", "โปรโมชั่นแลกของ", "หยิบของในที่มืด", 
+        "การคิดย้อนกลับ", "แผนภาพความชอบ", "ผลบวกจำนวนเรียงกัน (Gauss)", "เศษส่วนของที่เหลือ"
     ],
     "ระดับประถมปลาย (ป.5 - ป.6)": core_topics + [
-        "ตรรกะการจับมือ (ทักทาย)", 
-        "โปรโมชั่นแลกของ", 
-        "หยิบของในที่มืด", 
-        "แผนภาพความชอบ", 
-        "ผลบวกจำนวนเรียงกัน (Gauss)", 
-        "การตัดเชือกพับทบ", 
-        "อายุข้ามเวลาขั้นสูง", 
-        "ความเร็ววิ่งสวนทาง", 
-        "งานและเวลา (Work)", 
-        "ระฆังและไฟกะพริบ (ค.ร.น.)", 
-        "เศษส่วนของที่เหลือ", 
-        "ปริศนาตัวเลขซ่อนแอบ", 
-        "นาฬิกาเดินเพี้ยน"
+        "ตรรกะการจับมือ (ทักทาย)", "โปรโมชั่นแลกของ", "หยิบของในที่มืด", "แผนภาพความชอบ", 
+        "ผลบวกจำนวนเรียงกัน (Gauss)", "การตัดเชือกพับทบ", "อายุข้ามเวลาขั้นสูง", 
+        "ความเร็ววิ่งสวนทาง", "งานและเวลา (Work)", "ระฆังและไฟกะพริบ (ค.ร.น.)", 
+        "เศษส่วนของที่เหลือ", "ปริศนาตัวเลขซ่อนแอบ", "นาฬิกาเดินเพี้ยน"
     ]
 }
 
 # ==========================================
-# 3. Logic Generator (โครงสร้าง 27 หัวข้อครบถ้วน)
+# 3. Logic Generator (โครงสร้างเต็ม ไม่มีตัด)
 # ==========================================
 def generate_questions_logic(level, sub_t, num_q, is_challenge):
     questions = []
@@ -129,8 +105,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
             name = random.choice(NAMES)
 
             # ---------------------------------------------------------
-            # 1. อัตราส่วนอายุ
-            # ---------------------------------------------------------
             if actual_sub_t == "อัตราส่วนอายุ":
                 n1, n2, n3 = random.sample(["พี่", "พ่อ", "แม่", "น้า", "อา", "คุณครู", "นักเรียน"], 3)
                 if is_challenge:
@@ -139,22 +113,11 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     b_now = base * random.randint(4, 5)
                     c_now = base * random.randint(6, 8)
                     f = random.choice([4, 5, 6, 10])
-                    
-                    g1 = math.gcd(a_now, b_now)
-                    r1_a = a_now // g1
-                    r1_b = b_now // g1
-                    
-                    g2 = math.gcd(b_now, c_now)
-                    r2_b = b_now // g2
-                    r2_c = c_now // g2
-                    
-                    af = a_now + f
-                    bf = b_now + f
-                    cf = c_now + f
-                    g_ans = math.gcd(math.gcd(af, bf), cf)
-                    
+                    g1 = math.gcd(a_now, b_now); r1_a, r1_b = a_now//g1, b_now//g1
+                    g2 = math.gcd(b_now, c_now); r2_b, r2_c = b_now//g2, c_now//g2
+                    af, bf, cf = a_now+f, b_now+f, c_now+f; g_ans = math.gcd(math.gcd(af, bf), cf)
                     q = f"ปัจจุบัน อัตราส่วนอายุของ <b>{n1} ต่อ {n2} เป็น {r1_a}:{r1_b}</b> และอัตราส่วนอายุของ <b>{n2} ต่อ {n3} เป็น {r2_b}:{r2_c}</b><br>ถ้าปัจจุบัน {n2} อายุ {b_now} ปี จงหาอัตราส่วนอายุของ <b>{n1} : {n2} : {n3}</b> ในอีก {f} ปีข้างหน้า? (ตอบเป็นอัตราส่วนอย่างต่ำ)"
-                    sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์ (อัตราส่วนต่อเนื่อง):</b><br>
+                    sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (อัตราส่วนต่อเนื่อง):</b><br>
                     <b>ขั้นตอนที่ 1: หาอายุปัจจุบันของทุกคน</b><br>
                     &nbsp;&nbsp;&nbsp;👉 {n2} อายุ {b_now} ปี (เทียบจากอัตราส่วน {n1}:{n2} = {r1_a}:{r1_b} จะได้ส่วนละ {b_now//r1_b} ปี) ➔ {n1} = {r1_a}×{b_now//r1_b} = <b>{a_now} ปี</b><br>
                     &nbsp;&nbsp;&nbsp;👉 (เทียบจากอัตราส่วน {n2}:{n3} = {r2_b}:{r2_c} จะได้ส่วนละ {b_now//r2_b} ปี) ➔ {n3} = {r2_c}×{b_now//r2_b} = <b>{c_now} ปี</b><br>
@@ -170,12 +133,7 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                         a_now = random.randint(8, 15); diff = random.randint(20, 30); f = random.choice([5, 10, 12])
                     else: 
                         a_now = random.randint(12, 25); diff = random.randint(25, 40); f = random.choice([10, 15, 20, 25])
-                    
-                    b_now = a_now + diff
-                    r1_val = a_now + f
-                    r2_val = b_now + f
-                    g = math.gcd(r1_val, r2_val)
-                    
+                    b_now = a_now + diff; r1_val = a_now + f; r2_val = b_now + f; g = math.gcd(r1_val, r2_val)
                     q = f"ปัจจุบัน <b>{n2}</b> อายุ {a_now} ปี และ <b>{n1}</b> อายุ {b_now} ปี <br>จงหาว่าเมื่อเวลาผ่านไปอีก {f} ปีในอนาคต อัตราส่วนอายุของ <b>{n2} ต่อ {n1}</b> จะเป็นเท่าใด? (ตอบเป็นอัตราส่วนอย่างต่ำ)"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
                     <b>ขั้นตอนที่ 1: หาอายุในอนาคตของทั้งสองคน</b><br>
@@ -187,19 +145,12 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {r1_val//g} : {r2_val//g}</b></span>"""
 
             # ---------------------------------------------------------
-            # 2. การปักเสาและปลูกต้นไม้
-            # ---------------------------------------------------------
             elif actual_sub_t == "การปักเสาและปลูกต้นไม้":
-                role = random.choice(BUILDERS)
-                action = random.choice(BUILD_ACTIONS)
-                loc = random.choice(BUILD_LOCS)
+                role = random.choice(BUILDERS); action = random.choice(BUILD_ACTIONS); loc = random.choice(BUILD_LOCS)
                 if is_challenge:
-                    d = random.choice([4, 5, 8, 10])
-                    length = random.randint(100, 300)
-                    while length % d != 0: 
-                        length += 1
+                    d = random.choice([4, 5, 8, 10]); length = random.randint(100, 300)
+                    while length % d != 0: length += 1
                     ans = ((length // d) + 1) * 2
-                    
                     q = f"<b>{role}</b> มีโครงการ<b>{action}</b>บริเวณ <b>'สองฝั่ง'</b> ของถนนเส้นหนึ่งที่มีความยาว <b>{length} เมตร</b> โดยปักห่างกัน <b>{d} เมตร</b> และต้องติดตั้งที่จุดเริ่มต้นและสิ้นสุดด้วย <br>จะใช้สิ่งที่ติดตั้งทั้งหมดกี่จุด?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (คูณสองฝั่ง):</b><br>
                     <b>ขั้นตอนที่ 1: คำนวณจำนวนจุดของฝั่งเดียวก่อน</b><br>
@@ -216,7 +167,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                         d = random.choice([5, 8, 10, 12]); trees = random.randint(15, 35)
                     else: 
                         d = random.choice([10, 15, 20, 25]); trees = random.randint(40, 100)
-                        
                     length = (trees - 1) * d
                     q = f"<b>{role}</b> มีโครงการ<b>{action}</b>ที่<b>{loc}</b> โดยแต่ละจุดห่างกัน <b>{d} เมตร</b> และต้องปักที่จุดเริ่มต้นและสิ้นสุดพอดี <br>ถ้านับรวมได้ <b>{trees} จุด</b> ระยะทางนี้ยาวกี่เมตร?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -229,16 +179,10 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {length} เมตร</b></span>"""
 
             # ---------------------------------------------------------
-            # 3. เส้นทางที่เป็นไปได้
-            # ---------------------------------------------------------
             elif actual_sub_t == "เส้นทางที่เป็นไปได้":
-                loc1 = random.choice(["บ้าน", "กทม."])
-                loc2 = random.choice(["ตลาด", "อยุธยา"])
-                loc3 = random.choice(["โรงเรียน", "เชียงใหม่"])
+                loc1 = random.choice(["บ้าน", "กทม."]); loc2 = random.choice(["ตลาด", "อยุธยา"]); loc3 = random.choice(["โรงเรียน", "เชียงใหม่"])
                 if is_challenge:
-                    p1 = random.randint(3, 5)
-                    p2 = random.randint(2, 4)
-                    ans = (p1 * p2) * ((p1 - 1) * (p2 - 1))
+                    p1 = random.randint(3, 5); p2 = random.randint(2, 4); ans = (p1 * p2) * ((p1 - 1) * (p2 - 1))
                     q = f"มีเส้นทางจาก <b>{loc1} ไป {loc2}</b> จำนวน <b>{p1} สาย</b> และจาก <b>{loc2} ไป {loc3}</b> จำนวน <b>{p2} สาย</b><br>ต้องการเดินทางแบบ <b>ไป-กลับ ({loc1} ➔ {loc3} ➔ {loc1})</b> โดยมีข้อแม้ว่า <b>'ขากลับห้ามใช้เส้นทางเดิมที่เคยใช้ตอนขาไปเด็ดขาด'</b><br>จะมีรูปแบบการเดินทางไป-กลับทั้งหมดกี่วิธี?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (กฎการคูณแบบมีเงื่อนไข):</b><br>
                     <b>ขั้นตอนที่ 1: ขาไป ({loc1} ➔ {loc2} ➔ {loc3})</b><br>
@@ -256,7 +200,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                         p1, p2, p3 = random.randint(3, 4), random.randint(2, 3), random.randint(1, 2)
                     else: 
                         p1, p2, p3 = random.randint(4, 6), random.randint(3, 5), random.randint(2, 4)
-                        
                     ans = (p1 * p2) + p3
                     q = f"เดินทางจาก <b>{loc1} ไป {loc2}</b> มีทาง <b>{p1} สาย</b>, จาก <b>{loc2} ไป {loc3}</b> มีทาง <b>{p2} สาย</b> <br>และมีทางด่วนพิเศษจาก <b>{loc1} ไป {loc3}</b> (ไม่ผ่าน {loc2}) อีก <b>{p3} สาย</b><br>จะมีรูปแบบเดินทางจาก <b>{loc1} ไป {loc3}</b> ทั้งหมดกี่วิธี?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -269,15 +212,10 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {ans} วิธี</b></span>"""
 
             # ---------------------------------------------------------
-            # 4. คะแนนยิงเป้า
-            # ---------------------------------------------------------
             elif actual_sub_t == "คะแนนยิงเป้า":
                 if is_challenge:
-                    darts = random.randint(4, 5)
-                    pool = [10, 5, 3]
-                    miss_penalty = random.randint(1, 2)
-                    hits = random.choices(pool, k=darts-1) + [0]
-                    total_score = sum(hits) - miss_penalty
+                    darts = random.randint(4, 5); pool = [10, 5, 3]; miss_penalty = random.randint(1, 2)
+                    hits = random.choices(pool, k=darts-1) + [0]; total_score = sum(hits) - miss_penalty
                     q = f"เกมปาลูกดอกมีเป้าคะแนน <b>10, 5, 3</b> ถ้าปาพลาดเป้าจะถูก <b>หัก {miss_penalty} คะแนน</b><br><b>{name}</b> ปาลูกดอกทั้งหมด <b>{darts} ครั้ง</b> ได้คะแนนรวม <b>{total_score} คะแนน</b> <br>จงหาว่าเขาปาเข้าเป้าคะแนนใดบ้าง และพลาดกี่ครั้ง? (เรียงจากมากไปน้อย)"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (Trial and Error with Penalty):</b><br>
                     <b>ขั้นตอนที่ 1: ลองตั้งสมมติฐานว่ามี 'ปาพลาด'</b><br>
@@ -289,18 +227,10 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 จะพบว่ารูปแบบที่ถูกต้องคือ: <b>{' + '.join(map(str, sorted([h for h in hits if h > 0], reverse=True)))}</b><br>
                     <b>ตอบ: เข้าเป้าคะแนน {sorted([h for h in hits if h > 0], reverse=True)} และปาพลาด 1 ครั้ง</b></span>"""
                 else:
-                    if is_p12: 
-                        darts = 2; pool = [10, 5, 2]
-                    elif is_p34: 
-                        darts = 3; pool = [20, 10, 5, 2]
-                    else: 
-                        darts = random.choice([4, 5]); pool = [50, 20, 10, 5]
-                        
-                    pool.sort(reverse=True)
-                    hits = random.choices(pool, k=darts)
-                    total_score = sum(hits)
-                    hits.sort(reverse=True)
-                    
+                    if is_p12: darts = 2; pool = [10, 5, 2]
+                    elif is_p34: darts = 3; pool = [20, 10, 5, 2]
+                    else: darts = random.choice([4, 5]); pool = [50, 20, 10, 5]
+                    pool.sort(reverse=True); hits = random.choices(pool, k=darts); total_score = sum(hits); hits.sort(reverse=True)
                     q = f"เกมปาลูกดอก เป้ามีคะแนน <b>{', '.join(map(str, pool))} คะแนน</b><br><b>{name}</b> ปาลูกดอก <b>{darts} ครั้ง</b> เข้าเป้าทุกครั้ง ได้คะแนนรวม <b>{total_score} คะแนน</b> <br>จงหาว่าปาเข้าเป้าวงใดบ้าง? (เรียงจากมากไปน้อย)"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
                     <b>ขั้นตอนที่ 1: ใช้วิธีสุ่มแจกแจงตัวเลข (Trial and Error)</b><br>
@@ -311,18 +241,12 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: เข้าเป้าคะแนน {hits}</b></span>"""
 
             # ---------------------------------------------------------
-            # 5. การนับหน้าหนังสือ
-            # ---------------------------------------------------------
             elif actual_sub_t == "การนับหน้าหนังสือ":
-                publisher = random.choice(PUBLISHERS)
-                book_type = random.choice(DOC_TYPES)
+                publisher = random.choice(PUBLISHERS); book_type = random.choice(DOC_TYPES)
                 if is_challenge:
                     target_pages = random.randint(150, 450)
-                    if target_pages > 99:
-                        total_digits = 9 + 180 + ((target_pages - 99) * 3)
-                    else:
-                        total_digits = 9 + ((target_pages - 9) * 2)
-                        
+                    if target_pages > 99: total_digits = 9 + 180 + ((target_pages - 99) * 3)
+                    else: total_digits = 9 + ((target_pages - 9) * 2)
                     q = f"<b>{publisher}</b> กำลังพิมพ์ตัวเลขหน้าหนังสือ<b>{book_type}</b> โดยเริ่มตั้งแต่หน้า 1 <br>เมื่อพิมพ์เสร็จ พบว่าใช้ตัวเลขโดด (0-9) ไปทั้งหมด <b>{total_digits:,} ตัว</b> <br>จงหาว่าหนังสือเล่มนี้มีทั้งหมดกี่หน้า?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์ย้อนกลับแบบ Step-by-Step:</b><br>
                     <b>ขั้นตอนที่ 1: หักล้างตัวเลขหน้า 1 หลัก และ 2 หลักออกไปก่อน</b><br>
@@ -353,40 +277,28 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ขั้นตอนที่ 1: แบ่งนับเป็นกลุ่มตามจำนวนหลักของเลขหน้า</b><br>
                     {calc_text}<br>
                     <b>ขั้นตอนที่ 2: นำตัวเลขของทุกกลุ่มมารวมกัน</b><br>
-                    &nbsp;&nbsp;&nbsp;👉 ผลรวมทั้งหมด = <b>{ans:,} ตัว</b><br>
+                    &nbsp;&nbsp;&nbsp;👉 ผลรวมทั้งหมด: {sum_text} = <b>{ans:,} ตัว</b><br>
                     <b>ตอบ: {ans:,} ตัว</b></span>"""
 
-            # ---------------------------------------------------------
-            # 6. พื้นที่แรเงา (เรขาคณิต)
             # ---------------------------------------------------------
             elif actual_sub_t == "พื้นที่แรเงา (เรขาคณิต)":
                 mat = random.choice(MATERIALS)
                 if is_challenge:
-                    in_r = random.choice([7, 14]) 
-                    out_s = (in_r * 2) + random.choice([10, 20])
-                    area_sq = out_s ** 2
-                    area_cir = int((22/7) * in_r * in_r)
-                    ans = area_sq - area_cir
-                    
-                    pi_frac = get_vertical_fraction(22, 7, is_bold=False)
-                    
-                    q = f"แผ่น<b>{mat}</b>รูปสี่เหลี่ยมจัตุรัสยาวด้านละ <b>{out_s} ซม.</b> ช่างเจาะรูตรงกลางเป็น 'รูปวงกลม' ที่มีรัศมี <b>{in_r} ซม.</b> ทิ้งไป <br>จงหาพื้นที่ของแผ่น<b>{mat}</b>ส่วนที่เหลือ? (กำหนดให้ π ≈ {pi_frac})"
+                    in_r = random.choice([7, 14]); out_s = (in_r * 2) + random.choice([10, 20]); area_sq = out_s ** 2; area_cir = int((22/7) * in_r * in_r); ans = area_sq - area_cir
+                    f_pi = get_vertical_fraction(22, 7, is_bold=False)
+                    q = f"แผ่น<b>{mat}</b>รูปสี่เหลี่ยมจัตุรัสยาวด้านละ <b>{out_s} ซม.</b> ช่างเจาะรูตรงกลางเป็น 'รูปวงกลม' ที่มีรัศมี <b>{in_r} ซม.</b> ทิ้งไป <br>จงหาพื้นที่ของแผ่น<b>{mat}</b>ส่วนที่เหลือ? (กำหนดให้ π ≈ {f_pi})"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
                     <b>ขั้นตอนที่ 1: หาพื้นที่สี่เหลี่ยมจัตุรัสแผ่นใหญ่ทั้งหมดก่อน</b><br>
                     &nbsp;&nbsp;&nbsp;👉 สูตร ด้าน × ด้าน = {out_s} × {out_s} = <b>{area_sq:,} ตร.ซม.</b><br>
                     <b>ขั้นตอนที่ 2: หาพื้นที่วงกลมที่เจาะทิ้ง</b><br>
-                    &nbsp;&nbsp;&nbsp;👉 สูตร π × รัศมี × รัศมี = {pi_frac} × {in_r} × {in_r} = <b>{area_cir:,} ตร.ซม.</b><br>
+                    &nbsp;&nbsp;&nbsp;👉 สูตร π × รัศมี × รัศมี = {f_pi} × {in_r} × {in_r} = <b>{area_cir:,} ตร.ซม.</b><br>
                     <b>ขั้นตอนที่ 3: คำนวณพื้นที่ส่วนที่เหลือ</b><br>
                     &nbsp;&nbsp;&nbsp;👉 นำพื้นที่ใหญ่ หักลบด้วย พื้นที่รูที่ถูกเจาะทิ้ง: {area_sq:,} - {area_cir:,} = <b>{ans:,} ตร.ซม.</b><br>
                     <b>ตอบ: {ans:,} ตร.ซม.</b></span>"""
                 else:
-                    if is_p12: 
-                        out_w = 10; out_h = 10; in_s = random.randint(2, 4)
-                    elif is_p34: 
-                        out_w = random.randint(20, 30); out_h = random.randint(15, 20); in_s = random.randint(4, 8)
-                    else: 
-                        out_w = random.randint(40, 80); out_h = random.randint(30, 60); in_s = random.randint(10, 20)
-                    
+                    if is_p12: out_w, out_h, in_s = 10, 10, random.randint(2, 4)
+                    elif is_p34: out_w, out_h = random.randint(20, 30), random.randint(15, 20); in_s = random.randint(4, 8)
+                    else: out_w, out_h = random.randint(40, 80), random.randint(30, 60); in_s = random.randint(10, 20)
                     ans = (out_w * out_h) - (in_s**2)
                     q = f"แผ่น<b>{mat}</b>รูปสี่เหลี่ยมผืนผ้า กว้าง <b>{out_w} ซม.</b> ยาว <b>{out_h} ซม.</b> ตัดเจาะรูตรงกลางเป็น 'สี่เหลี่ยมจัตุรัส' ยาวด้านละ <b>{in_s} ซม.</b> ทิ้งไป <br>จงหาพื้นที่ส่วนที่เหลือ?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -399,22 +311,13 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {ans:,} ตร.ซม.</b></span>"""
 
             # ---------------------------------------------------------
-            # 7. จัดของใส่กล่อง (Modulo)
-            # ---------------------------------------------------------
             elif actual_sub_t == "จัดของใส่กล่อง (Modulo)":
                 item = random.choice(FRUITS + ITEMS); container = random.choice(CONTAINERS)
                 if is_challenge:
-                    m1, m2 = 3, 5
-                    rem1 = random.randint(1, 2)
-                    rem2 = random.randint(1, 4)
-                    ans = 0
+                    m1, m2 = 3, 5; rem1 = random.randint(1, 2); rem2 = random.randint(1, 4); ans = 0
                     for i in range(1, 200):
-                        if i % m1 == rem1 and i % m2 == rem2:
-                            ans = i
-                            break
-                    if ans == 0: 
-                        continue
-                    
+                        if i % m1 == rem1 and i % m2 == rem2: ans = i; break
+                    if ans == 0: continue
                     q = f"คุณครูมี<b>{item}</b>จำนวนหนึ่ง <br>ถ้าจัดใส่<b>{container}</b>ละ {m1} ชิ้น จะเหลือเศษ <b>{rem1} ชิ้น</b><br>แต่ถ้าเปลี่ยนมาจัดใส่<b>{container}</b>ละ {m2} ชิ้น จะเหลือเศษ <b>{rem2} ชิ้น</b> พอดี<br>จงหาว่าคุณครูมี<b>{item}</b>น้อยที่สุดกี่ชิ้น?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (ทฤษฎีบทเศษเหลือ):</b><br>
                     ใช้วิธีลองไล่ตัวเลข (Listing) ที่ตรงกับเงื่อนไขแรก แล้วเช็กกับเงื่อนไขที่สอง<br>
@@ -427,15 +330,10 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 พิสูจน์: {ans} ÷ {m2} = {ans//m2} เศษ {ans%m2} (ตรงตามเงื่อนไขพอดี!)<br>
                     <b>ตอบ: {ans} ชิ้น</b></span>"""
                 else:
-                    if is_p12: 
-                        box_cap = random.randint(3, 5); num_boxes = random.randint(5, 10)
-                    elif is_p34: 
-                        box_cap = random.randint(8, 12); num_boxes = random.randint(15, 25)
-                    else: 
-                        box_cap = random.randint(15, 25); num_boxes = random.randint(30, 50)
-                    
-                    rem = random.randint(1, box_cap - 1)
-                    total_items = (box_cap * num_boxes) + rem
+                    if is_p12: box_cap = random.randint(3, 5); num_boxes = random.randint(5, 10)
+                    elif is_p34: box_cap = random.randint(8, 12); num_boxes = random.randint(15, 25)
+                    else: box_cap = random.randint(15, 25); num_boxes = random.randint(30, 50)
+                    rem = random.randint(1, box_cap - 1); total_items = (box_cap * num_boxes) + rem
                     q = f"มี<b>{item}</b>ทั้งหมด <b>{total_items}</b> ชิ้น จัดใส่<b>{container}</b> ใบละ <b>{box_cap}</b> ชิ้นเท่าๆ กัน <br>จะได้<b>{container}</b>เต็มกี่ใบ? และเหลือเศษกี่ชิ้น?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
                     <b>ขั้นตอนที่ 1: ใช้การตั้งหารเพื่อแบ่งของเป็นกลุ่มๆ</b><br>
@@ -446,23 +344,13 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: ได้เต็ม {num_boxes} ใบ และเหลือเศษ {rem} ชิ้น</b></span>"""
 
             # ---------------------------------------------------------
-            # 8. วันที่และปฏิทิน
-            # ---------------------------------------------------------
             elif actual_sub_t == "วันที่และปฏิทิน":
                 d_th = ["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์"]
                 if is_challenge:
-                    s_d = random.randint(1, 5); s_idx = random.randint(0, 6)
-                    months = [("มกราคม", 31), ("กุมภาพันธ์", 28), ("มีนาคม", 31), ("เมษายน", 30)]
-                    start_m_idx = random.randint(0, 1); target_m_idx = start_m_idx + 2
-                    
-                    start_month, start_days = months[start_m_idx]
-                    _, mid_days = months[start_m_idx+1]
-                    target_month, _ = months[target_m_idx]
-                    
-                    t_d = random.randint(10, 20)
-                    add_days = (start_days - s_d) + mid_days + t_d
-                    t_idx = (s_idx + (add_days % 7)) % 7
-                    
+                    s_d = random.randint(1, 5); s_idx = random.randint(0, 6); months = [("มกราคม", 31), ("กุมภาพันธ์", 28), ("มีนาคม", 31), ("เมษายน", 30)]
+                    start_m_idx = random.randint(0, 1); target_m_idx = start_m_idx + 2; start_month, start_days = months[start_m_idx]
+                    _, mid_days = months[start_m_idx+1]; target_month, _ = months[target_m_idx]; t_d = random.randint(10, 20)
+                    add_days = (start_days - s_d) + mid_days + t_d; t_idx = (s_idx + (add_days % 7)) % 7
                     q = f"ในปีปกติ (กุมภาพันธ์มี 28 วัน)<br>ถ้าวันที่ <b>{s_d} {start_month}</b> ตรงกับ <b>วัน{d_th[s_idx]}</b> <br>จงหาว่า วันที่ <b>{t_d} {target_month}</b> ของปีเดียวกัน จะตรงกับวันอะไรในสัปดาห์?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (การนับวันข้ามเดือน):</b><br>
                     <b>ขั้นตอนที่ 1: หาจำนวนวันทั้งหมดที่ต้องนับเดินหน้า</b><br>
@@ -480,7 +368,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     if is_p12: add = random.randint(7, 15)
                     elif is_p34: add = random.randint(20, 45)
                     else: add = random.randint(50, 120)
-                    
                     t_idx = (s_idx + (add % 7)) % 7
                     q = f"ถ้าวันที่ <b>{s_d}</b> ของเดือนนี้ ตรงกับ <b>วัน{d_th[s_idx]}</b> พอดี <br>จงหาว่าอีก <b>{add} วันข้างหน้า</b> จะตรงกับวันอะไรในสัปดาห์?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -493,38 +380,27 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: วัน{d_th[t_idx]}</b></span>"""
 
             # ---------------------------------------------------------
-            # 9. สัตว์ปีนบ่อ
-            # ---------------------------------------------------------
             elif actual_sub_t == "สัตว์ปีนบ่อ":
                 animal = random.choice(ANIMALS)
                 if is_challenge:
-                    u, d = 5, 2
-                    heavy_d = 4
-                    h = random.randint(25, 35)
-                    pos = 0; days = 0
+                    u, d = 5, 2; heavy_d = 4; h = random.randint(25, 35); pos = 0; days = 0
                     while pos < h:
-                        days += 1
-                        pos += u
+                        days += 1; pos += u
                         if pos >= h: break
                         if days % 3 == 0: pos -= heavy_d
                         else: pos -= d
-                        
                     q = f"<b>{animal}</b>ตกลงไปในบ่อลึก <b>{h} เมตร</b><br>ตอนกลางวันปีนขึ้นได้ <b>{u} เมตร</b> ตอนกลางคืนลื่นตกลง <b>{d} เมตร</b> เสมอ<br>แต่ <b>'ทุกๆ คืนวันที่ 3'</b> ฝนจะตกทำให้ลื่นไถลลงไปถึง <b>{heavy_d} เมตร</b>แทน<br>จงหาว่าจะใช้เวลากี่วันจึงจะปีนพ้นปากบ่อ?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (Simulation จำลองเหตุการณ์):</b><br>
                     ข้อนี้สูตรลัดใช้ไม่ได้เพราะมีเงื่อนไขฝนตกแทรกเข้ามา ต้องจำลองสถานการณ์บวกทีละวันอย่างระมัดระวัง!<br>
-                    &nbsp;&nbsp;&nbsp;👉 <b>วันที่ 1:</b> ปีนขึ้น {u} ลื่น {d} ➔ ยืนอยู่ที่ <b>{u-d} ม.</b><br>
-                    &nbsp;&nbsp;&nbsp;👉 <b>วันที่ 2:</b> ปีนขึ้น {u} (กลายเป็น {u-d+u}) ลื่น {d} ➔ ยืนอยู่ที่ <b>{(u-d)*2} ม.</b><br>
-                    &nbsp;&nbsp;&nbsp;👉 <b>วันที่ 3 (ฝนตก):</b> ปีนขึ้น {u} แต่ลื่น {heavy_d} ➔ ยืนอยู่ที่ {(u-d)*2+u-heavy_d} ม.<br>
-                    &nbsp;&nbsp;&nbsp;👉 เมื่อจำลองการบวกลบไปเรื่อยๆ จะพบว่าใน <b>วันที่ {days}</b> ตอนกลางวัน เมื่อสัตว์ปีนขึ้นไปอีก {u} เมตร จะพ้นขอบบ่อไปเลย {h} เมตร พอดีเป๊ะ! (จึงไม่ต้องรอลื่นลงมาในตอนกลางคืนอีกแล้ว)<br>
+                    - <b>วันที่ 1:</b> ปีนขึ้น {u} ลื่น {d} ➔ ยืนอยู่ที่ <b>{u-d} ม.</b><br>
+                    - <b>วันที่ 2:</b> ปีนขึ้น {u} (กลายเป็น {u-d+u}) ลื่น {d} ➔ ยืนอยู่ที่ <b>{(u-d)*2} ม.</b><br>
+                    - <b>วันที่ 3 (ฝนตก):</b> ปีนขึ้น {u} แต่ลื่น {heavy_d} ➔ ยืนอยู่ที่ {(u-d)*2+u-heavy_d} ม.<br>
+                    - เมื่อจำลองการบวกลบไปเรื่อยๆ จะพบว่าใน <b>วันที่ {days}</b> ตอนกลางวัน เมื่อสัตว์ปีนขึ้นไปอีก {u} เมตร จะพ้นขอบบ่อไปเลย {h} เมตร พอดีเป๊ะ! (จึงไม่ต้องรอลื่นลงมาในตอนกลางคืนอีกแล้ว)<br>
                     <b>ตอบ: ใช้เวลา {days} วัน</b></span>"""
                 else:
-                    if is_p12: 
-                        u = random.randint(3, 4); d = random.randint(1, 2); h = random.randint(10, 15)
-                    elif is_p34: 
-                        u = random.randint(5, 8); d = random.randint(2, 4); h = random.randint(20, 35)
-                    else: 
-                        u = random.randint(10, 15); d = random.randint(4, 8); h = random.randint(50, 100)
-                    
+                    if is_p12: u = random.randint(3, 4); d = random.randint(1, 2); h = random.randint(10, 15)
+                    elif is_p34: u = random.randint(5, 8); d = random.randint(2, 4); h = random.randint(20, 35)
+                    else: u = random.randint(10, 15); d = random.randint(4, 8); h = random.randint(50, 100)
                     net = u - d; days = math.ceil((h - u) / net) + 1
                     q = f"<b>{animal}</b>ตกลงบ่อลึก <b>{h} เมตร</b> กลางวันปีน <b>{u} เมตร</b> กลางคืนลื่น <b>{d} เมตร</b> จะต้องใช้เวลากี่วันจึงจะปีนพ้นปากบ่อ?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -539,8 +415,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 นำเวลาช่วงแรก ไปบวกกับ วันสุดท้ายที่กระโดดพ้นบ่ออีก 1 วัน: {math.ceil((h - u) / net)} + 1 = <b>{days} วัน</b><br>
                     <b>ตอบ: {days} วัน</b></span>"""
 
-            # ---------------------------------------------------------
-            # 10. ตรรกะตาชั่งสมดุล
             # ---------------------------------------------------------
             elif actual_sub_t == "ตรรกะตาชั่งสมดุล":
                 items_pair = [("เพชร", "ทอง", "เงิน", "เหล็ก"), ("สิงโต", "หมาป่า", "จิ้งจอก", "แมว"), ("ผลส้ม", "แอปเปิล", "สตรอว์เบอร์รี", "องุ่น")]
@@ -559,13 +433,9 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 {m1*m2*m3} × {q_mul} = <b>{ans} อัน</b><br>
                     <b>ตอบ: {ans} อัน</b></span>"""
                 else:
-                    if is_p12: 
-                        m1, m2, q_mul = 2, 2, 1
-                    elif is_p34: 
-                        m1, m2, q_mul = random.randint(3, 5), random.randint(3, 5), 2
-                    else: 
-                        m1, m2, q_mul = random.randint(4, 8), random.randint(4, 8), random.randint(3, 4)
-                    
+                    if is_p12: m1, m2, q_mul = 2, 2, 1
+                    elif is_p34: m1, m2, q_mul = random.randint(3, 5), random.randint(3, 5), 2
+                    else: m1, m2, q_mul = random.randint(4, 8), random.randint(4, 8), random.randint(3, 4)
                     q = f"ตาชั่งสมดุลให้ข้อมูลดังนี้:<br>- <b>{i1} 1 ชิ้น</b> หนักเท่ากับ <b>{i2} {m1} ชิ้น</b><br>- <b>{i2} 1 ชิ้น</b> หนักเท่ากับ <b>{i3} {m2} ชิ้น</b><br>อยากทราบว่า <b>{i1} จำนวน {q_mul} ชิ้น</b> จะมีน้ำหนักเท่ากับ <b>{i3}</b> กี่ชิ้น?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
                     <b>ขั้นตอนที่ 1: แทนค่าสิ่งของข้ามกัน (หาความสัมพันธ์โดยตรง)</b><br>
@@ -577,14 +447,10 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {m1 * m2 * q_mul} ชิ้น</b></span>"""
 
             # ---------------------------------------------------------
-            # 11. ปัญหาผลรวม-ผลต่าง
-            # ---------------------------------------------------------
             elif actual_sub_t == "ปัญหาผลรวม-ผลต่าง":
                 n1, n2, n3 = random.sample(NAMES, 3); itm = random.choice(ITEMS)
                 if is_challenge:
-                    a = random.randint(30, 50); b = a + random.randint(10, 20); c = b + random.randint(10, 20)
-                    total = a + b + c; diff_bc = c - b; diff_ac = c - a
-                    
+                    a = random.randint(30, 50); b = a + random.randint(10, 20); c = b + random.randint(10, 20); total = a + b + c; diff_bc = c - b; diff_ac = c - a
                     q = f"<b>{n1}, {n2}, และ {n3}</b> มี<b>{itm}</b>รวมกัน <b>{total}</b> ชิ้น <br>ถ้า <b>{n3}</b> มีมากกว่า <b>{n2}</b> อยู่ <b>{diff_bc}</b> ชิ้น และ <b>{n3}</b> มีมากกว่า <b>{n1}</b> อยู่ <b>{diff_ac}</b> ชิ้น <br>จงหาว่า <b>{n3} (คนที่มีเยอะที่สุด)</b> มีกี่ชิ้น?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (การปรับให้เท่ากัน 3 คน):</b><br>
                     เทคนิคคือ สมมติให้ทุกคนมีของเท่ากับ {n3} (คนที่มากที่สุด) เพื่อให้ตั้งหารได้ง่ายๆ!<br>
@@ -597,13 +463,9 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 นำยอดรวมสมมติมาแบ่ง 3 ส่วนเท่าๆ กัน: {total+diff_ac+diff_bc} ÷ 3 = <b>{c} ชิ้น</b><br>
                     <b>ตอบ: {c} ชิ้น</b></span>"""
                 else:
-                    if is_p12: 
-                        small = random.randint(10, 20); diff = random.randint(5, 10)
-                    elif is_p34: 
-                        small = random.randint(50, 150); diff = random.randint(20, 50)
-                    else: 
-                        small = random.randint(500, 1500); diff = random.randint(100, 300)
-                    
+                    if is_p12: small = random.randint(10, 20); diff = random.randint(5, 10)
+                    elif is_p34: small = random.randint(50, 150); diff = random.randint(20, 50)
+                    else: small = random.randint(500, 1500); diff = random.randint(100, 300)
                     large = small + diff; total = large + small
                     q = f"<b>{n1}</b> และ <b>{n2}</b> มี<b>{itm}</b>รวมกัน <b>{total}</b> ชิ้น หาก <b>{n1}</b> มีมากกว่า <b>{n2}</b> อยู่ <b>{diff}</b> ชิ้น จงหาว่า <b>{n1}</b> มีกี่ชิ้น?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -617,14 +479,11 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {large} ชิ้น</b></span>"""
 
             # ---------------------------------------------------------
-            # 12. แถวคอยแบบซ้อนทับ
-            # ---------------------------------------------------------
             elif actual_sub_t == "แถวคอยแบบซ้อนทับ":
                 n1, n2 = random.sample(NAMES, 2); loc = random.choice(LOCS)
                 if is_challenge:
                     overlap = random.randint(3, 10); total_people = random.randint(50, 100); sum_pos = total_people + overlap
                     front_pos = random.randint(overlap + 5, total_people - 5); back_pos = sum_pos - front_pos; ans = overlap - 2
-                    
                     q = f"นักเรียนเข้าแถวรอเข้า<b>{loc}</b> มีคนทั้งหมด <b>{total_people}</b> คน<br>ถ้า <b>{n1}</b> ยืนลำดับที่ <b>{front_pos}</b> นับจากหัวแถว และ <b>{n2}</b> ยืนลำดับที่ <b>{back_pos}</b> นับจากท้ายแถว <br>มีคนยืนอยู่ระหว่าง <b>{n1}</b> กับ <b>{n2}</b> กี่คน? <br><span style='font-size:16px; color:#7f8c8d;'>(คำใบ้: ระวังการนับซ้อนทับกัน)</span>"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (ระวังแถวเหลื่อมทับกัน):</b><br>
                     <b>ขั้นตอนที่ 1: ตรวจสอบการซ้อนทับกันของแถว</b><br>
@@ -636,13 +495,9 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 เราต้องการหาคน 'ระหว่างกลาง' จึงต้องหัก {n1} และ {n2} ทิ้งออกไปจากกลุ่มที่ทับกัน: {overlap} - 2 = <b>{ans} คน</b><br>
                     <b>ตอบ: {ans} คน</b></span>"""
                 else:
-                    if is_p12: 
-                        front_pos = random.randint(5, 10); back_pos = random.randint(5, 10)
-                    elif is_p34: 
-                        front_pos = random.randint(15, 30); back_pos = random.randint(15, 30)
-                    else: 
-                        front_pos = random.randint(40, 80); back_pos = random.randint(40, 80)
-                    
+                    if is_p12: front_pos, back_pos = random.randint(5, 10), random.randint(5, 10)
+                    elif is_p34: front_pos, back_pos = random.randint(15, 30), random.randint(15, 30)
+                    else: front_pos, back_pos = random.randint(40, 80), random.randint(40, 80)
                     total_people = front_pos + back_pos + random.randint(5, 15); between = total_people - (front_pos + back_pos)
                     q = f"นักเรียนเข้าแถว มีคนทั้งหมด <b>{total_people}</b> คน<br>ถ้า <b>{n1}</b> ยืนลำดับที่ <b>{front_pos}</b> จากหัวแถว และ <b>{n2}</b> ลำดับที่ <b>{back_pos}</b> จากท้ายแถว <br>มีคนยืนอยู่ระหว่าง 2 คนนี้กี่คน? (กำหนดให้ {n1} ยืนหน้า {n2})"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -655,16 +510,12 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {between} คน</b></span>"""
 
             # ---------------------------------------------------------
-            # 13. คิววงกลมมรณะ
-            # ---------------------------------------------------------
             elif actual_sub_t == "คิววงกลมมรณะ":
                 n1, n2, n3 = random.sample(NAMES, 3)
                 if is_challenge:
-                    n_half = random.randint(15, 30); total = n_half * 2
-                    pos1 = random.randint(1, n_half); pos2 = pos1 + n_half
+                    n_half = random.randint(15, 30); total = n_half * 2; pos1 = random.randint(1, n_half); pos2 = pos1 + n_half
                     add_pos = random.randint(3, 8); pos3 = (pos2 + add_pos) % total
                     if pos3 == 0: pos3 = total
-                    
                     q = f"เด็กยืนล้อมเป็นวงกลมเว้นระยะห่างเท่าๆ กัน นับหมายเลข 1, 2, 3... <br>ถ้า <b>{n1}</b> หมายเลข <b>{pos1}</b> มองตรงไปฝั่งตรงข้ามพอดี พบ <b>{n2}</b> หมายเลข <b>{pos2}</b> <br>และถ้า <b>{n3}</b> ยืนอยู่ถัดจาก {n2} ไปทางซ้ายมือ (นับเพิ่มขึ้น) อีก <b>{add_pos} คน</b><br>จงหาว่าเด็กกลุ่มนี้มีทั้งหมดกี่คน และ <b>{n3}</b> คือหมายเลขใด?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (ตำแหน่งสัมพันธ์วงกลม):</b><br>
                     <b>1) หาจำนวนคนทั้งหมดจากรหัสฝั่งตรงข้าม</b><br>
@@ -680,7 +531,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     if is_p12: n_half = random.randint(4, 6)
                     elif is_p34: n_half = random.randint(8, 15)
                     else: n_half = random.randint(20, 40)
-                    
                     total = n_half * 2; pos1 = random.randint(1, n_half); pos2 = pos1 + n_half
                     q = f"เด็กยืนล้อมวงกลมเว้นระยะเท่าๆ กัน นับหมายเลขเรียง 1, 2... <br>ถ้า <b>{n1}</b> หมายเลข <b>{pos1}</b> มองฝั่งตรงข้ามพบ <b>{n2}</b> หมายเลข <b>{pos2}</b> เด็กกลุ่มนี้มีกี่คน?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -692,25 +542,15 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {total} คน</b></span>"""
 
             # ---------------------------------------------------------
-            # 14. การคิดย้อนกลับ
-            # ---------------------------------------------------------
             elif actual_sub_t == "การคิดย้อนกลับ":
                 name = random.choice(NAMES); item = random.choice(ITEMS)
                 if is_challenge:
-                    end_val = random.randint(10, 30); div_v = random.choice([2, 3, 4]); step3 = end_val * div_v
-                    sub_v = random.randint(10, 20); step2 = step3 + sub_v; mul_v = random.choice([2, 3])
-                    
-                    while step2 % mul_v != 0: 
-                        sub_v += 1
-                        step2 = step3 + sub_v
-                        
+                    end_val = random.randint(10, 30); div_v = random.choice([2, 3, 4]); step3 = end_val * div_v; sub_v = random.randint(10, 20)
+                    step2 = step3 + sub_v; mul_v = random.choice([2, 3])
+                    while step2 % mul_v != 0: sub_v += 1; step2 = step3 + sub_v
                     step1 = step2 // mul_v; add_v = random.randint(5, 15)
-                    
-                    if step1 <= add_v: 
-                        add_v = max(step1 - random.randint(1, 3), 1)
-                        
+                    if step1 <= add_v: add_v = max(step1 - random.randint(1, 3), 1)
                     X = step1 - add_v
-                    
                     q = f"<b>{name}</b> คิดเลขปริศนาในใจขั้นตอนดังนี้:<br>นำจำนวนปริศนามา <b>บวกด้วย {add_v}</b>, จากนั้นนำผลลัพธ์ <b>คูณด้วย {mul_v}</b>, <br>แล้ว <b>ลบออกด้วย {sub_v}</b>, และสุดท้าย <b>หารด้วย {div_v}</b> <br>ปรากฏว่าผลลัพธ์สุดท้ายคือ <b>{end_val}</b> พอดี จงหา 'จำนวนปริศนา' นั้น?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (Reverse Engineering 4 ชั้น):</b><br>
                     เทคนิค: ทำย้อนกลับจากเหตุการณ์หลังสุดไปหาหน้าสุด และ 'สลับเครื่องหมาย' ให้ตรงกันข้ามทั้งหมด!<br>
@@ -720,13 +560,9 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ชั้นที่ 4 (ย้อนไปหาตัวแรกสุด):</b> เปลี่ยน บวก เป็น ลบ ➔ นำ {step1} - {add_v} = <b>{X}</b><br>
                     <b>ตอบ: {X}</b></span>"""
                 else:
-                    if is_p12: 
-                        sm, sp, rv = random.randint(20, 50), random.randint(5, 15), random.randint(10, 20)
-                    elif is_p34: 
-                        sm, sp, rv = random.randint(100, 300), random.randint(20, 80), random.randint(50, 150)
-                    else: 
-                        sm, sp, rv = random.randint(1000, 3000), random.randint(200, 800), random.randint(500, 1500)
-                    
+                    if is_p12: sm, sp, rv = random.randint(20, 50), random.randint(5, 15), random.randint(10, 20)
+                    elif is_p34: sm, sp, rv = random.randint(100, 300), random.randint(20, 80), random.randint(50, 150)
+                    else: sm, sp, rv = random.randint(1000, 3000), random.randint(200, 800), random.randint(500, 1500)
                     fm = sm - sp + rv
                     q = f"<b>{name}</b>นำเงินไปซื้อ<b>{item}</b> <b>{sp:,}</b> บาท จากนั้นแม่ให้เพิ่มอีก <b>{rv:,}</b> บาท ทำให้มีเงิน <b>{fm:,}</b> บาท <br>ตอนแรกมีเงินกี่บาท?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (คิดย้อนกลับ):</b><br>
@@ -739,8 +575,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {sm:,} บาท</b></span>"""
 
             # ---------------------------------------------------------
-            # 15. โปรโมชั่นแลกของ
-            # ---------------------------------------------------------
             elif actual_sub_t == "โปรโมชั่นแลกของ":
                 snack = random.choice(SNACKS)
                 if is_challenge:
@@ -751,7 +585,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                         left_b = empties % exch
                         total_drank += new_b
                         empties = new_b + left_b
-                        
                     borrowed = 0
                     if empties == exch - 1:
                         borrowed = 1
@@ -780,7 +613,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     if is_p12: exch = 3; start_bottles = random.randint(6, 9)
                     elif is_p34: exch = random.randint(4, 5); start_bottles = random.randint(12, 25)
                     else: exch = random.randint(5, 8); start_bottles = random.randint(30, 60)
-                    
                     total_drank = start_bottles; empties = start_bottles
                     while empties >= exch:
                         new_b = empties // exch
@@ -795,8 +627,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ขั้นตอนที่ 4:</b> บวกจำนวนชิ้นที่ได้กินในทุกๆ รอบเข้าด้วยกัน จะได้ทั้งหมด <b>{total_drank} ชิ้น</b><br>
                     <b>ตอบ: {total_drank} ชิ้น</b></span>"""
 
-            # ---------------------------------------------------------
-            # 16. ตรรกะการจับมือ (ทักทาย)
             # ---------------------------------------------------------
             elif actual_sub_t == "ตรรกะการจับมือ (ทักทาย)":
                 loc = random.choice(LOCS)
@@ -824,8 +654,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {ans} ครั้ง</b></span>"""
 
             # ---------------------------------------------------------
-            # 17. หยิบของในที่มืด
-            # ---------------------------------------------------------
             elif actual_sub_t == "หยิบของในที่มืด":
                 item = random.choice(ITEMS)
                 if is_challenge:
@@ -849,7 +677,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     else: 
                         c1, c2, c3, c4 = random.randint(15, 30), random.randint(15, 30), random.randint(15, 30), random.randint(5, 15)
                         c_total = c1+c2+c3; text_add = f", สีเหลือง <b>{c4}</b> ชิ้น"; target_color = "สีเหลือง"
-                    
                     q = f"ในกล่องทึบมี<b>{item}</b>สีแดง <b>{c1}</b> ชิ้น, สีน้ำเงิน <b>{c2}</b> ชิ้น, สีเขียว <b>{c3}</b> ชิ้น{text_add}<br>ต้องหยิบ<b>อย่างน้อยกี่ชิ้น</b> จึงจะมั่นใจ 100% ว่าจะได้<b>{target_color}</b>อย่างน้อย 1 ชิ้น?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (หลักการดวงซวยที่สุด):</b><br>
                     <b>ขั้นตอนที่ 1: จำลองความโชคร้าย</b><br>
@@ -861,20 +688,12 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {c_total+1} ชิ้น</b></span>"""
 
             # ---------------------------------------------------------
-            # 18. แผนภาพความชอบ
-            # ---------------------------------------------------------
             elif actual_sub_t == "แผนภาพความชอบ":
                 n1, n2, n3 = random.sample(SNACKS, 3)
                 if is_challenge:
-                    tot = random.randint(150, 200)
-                    only_A, only_B, only_C = random.randint(10, 20), random.randint(10, 20), random.randint(10, 20)
-                    A_B, B_C, A_C = random.randint(5, 10), random.randint(5, 10), random.randint(5, 10); all_3 = random.randint(3, 8)
-                    neither = random.randint(5, 15)
-                    
-                    like_A = only_A + A_B + A_C + all_3
-                    like_B = only_B + A_B + B_C + all_3
-                    like_C = only_C + A_C + B_C + all_3
-                    
+                    tot = random.randint(150, 200); only_A, only_B, only_C = random.randint(10, 20), random.randint(10, 20), random.randint(10, 20)
+                    A_B, B_C, A_C = random.randint(5, 10), random.randint(5, 10), random.randint(5, 10); all_3 = random.randint(3, 8); neither = random.randint(5, 15)
+                    like_A = only_A + A_B + A_C + all_3; like_B = only_B + A_B + B_C + all_3; like_C = only_C + A_C + B_C + all_3
                     real_tot = only_A + only_B + only_C + A_B + B_C + A_C + all_3 + neither
                     
                     q = f"สำรวจนักเรียน <b>{real_tot}</b> คน พบว่ามีคนชอบ <b>{n1} {like_A} คน</b>, ชอบ <b>{n2} {like_B} คน</b>, และชอบ <b>{n3} {like_C} คน</b><br>โดยมีคนที่ชอบ {n1}และ{n2} (แต่ไม่ชอบ{n3}) <b>{A_B} คน</b>, ชอบ {n2}และ{n3} (แต่ไม่ชอบ{n1}) <b>{B_C} คน</b>, ชอบ {n1}และ{n3} (แต่ไม่ชอบ{n2}) <b>{A_C} คน</b><br>และคนที่ชอบทั้ง 3 อย่างมี <b>{all_3} คน</b> จงหาว่ามีนักเรียนกี่คนที่ <b>'ไม่ชอบ'</b> ขนมทั้ง 3 ชนิดนี้เลย?"
@@ -893,7 +712,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                         tot = random.randint(30, 50); both = random.randint(5, 12)
                     else: 
                         tot = random.randint(100, 200); both = random.randint(20, 50)
-                    
                     only_a = random.randint(10, 20); only_b = random.randint(10, 20)
                     l_a = only_a + both; l_b = only_b + both; neither = tot - (only_a + only_b + both)
                     q = f"สำรวจนักเรียน <b>{tot}</b> คน พบว่าชอบ<b>{n1}</b> <b>{l_a}</b> คน, ชอบ<b>{n2}</b> <b>{l_b}</b> คน, และชอบทั้งสองอย่าง <b>{both}</b> คน <br>มีกี่คนที่ไม่ชอบกินขนมทั้งสองชนิดนี้เลย?"
@@ -907,8 +725,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 นำคนทั้งหมดลบคนที่ชอบขนม: {tot} - {only_a + only_b + both} = <b>{neither} คน</b><br>
                     <b>ตอบ: {neither} คน</b></span>"""
 
-            # ---------------------------------------------------------
-            # 19. ผลบวกจำนวนเรียงกัน (Gauss)
             # ---------------------------------------------------------
             elif actual_sub_t == "ผลบวกจำนวนเรียงกัน (Gauss)":
                 if is_challenge:
@@ -938,8 +754,7 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                         &nbsp;&nbsp;&nbsp;👉 นำผลบวก 1 คู่ × จำนวนคู่ทั้งหมด ➔ {N} × {(N//2)/2} = {N//2} × {N//2} = <b>{ans:,}</b><br>
                         <b>ตอบ: {ans:,}</b></span>"""
                 else:
-                    n = random.choice([100, 200, 500])
-                    ans = (n * (n + 1)) // 2
+                    n = random.choice([100, 200, 500]); ans = (n * (n + 1)) // 2
                     q = f"จงหาผลบวกของตัวเลขเรียงลำดับตั้งแต่ 1 ถึง {n} <br>( 1 + 2 + 3 + ... + {n} = ? )"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (หลักการจับคู่ของเกาส์):</b><br>
                     <b>ขั้นตอนที่ 1: หาผลบวกของการจับคู่หัว-ท้าย</b><br>
@@ -951,29 +766,22 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {ans:,}</b></span>"""
 
             # ---------------------------------------------------------
-            # 20. เศษส่วนของที่เหลือ
-            # ---------------------------------------------------------
             elif actual_sub_t == "เศษส่วนของที่เหลือ":
                 item = random.choice(ITEMS)
                 if is_challenge:
                     A = random.choice([3, 4, 5]); C = random.choice([3, 4, 5]); K = random.randint(1, 5) * 10
                     D = (C - 1) * K; before_bank = C * K
-                    
-                    mult = random.randint(5, 10)
-                    target = mult * (A - 1)
+                    mult = random.randint(5, 10); target = mult * (A - 1)
                     while target <= before_bank:
                         mult += 1
                         target = mult * (A - 1)
-                        
                     B = target - before_bank; Original = mult * A
                     
                     f1_A = get_vertical_fraction(1, A, is_bold=False)
                     f_rem_A = get_vertical_fraction(A-1, A, is_bold=False)
                     f1_C = get_vertical_fraction(1, C, is_bold=False)
                     f_rem_C = get_vertical_fraction(C-1, C, is_bold=False)
-                    
-                    frac1 = get_vertical_fraction(1, A)
-                    frac2 = get_vertical_fraction(1, C)
+                    frac1 = get_vertical_fraction(1, A); frac2 = get_vertical_fraction(1, C)
                     
                     q = f"<b>{name}</b>มีเงินก้อนหนึ่ง นำไปซื้อขนม <b>{frac1} ของเงินทั้งหมด</b> จากนั้นนำเงินไปซื้อของเล่นอีก <b>{B} บาท</b><br>แล้วนำเงินที่เหลือไปฝากธนาคาร <b>{frac2} ของเงินที่เหลือจากซื้อของเล่น</b><br>ทำให้ตอนนี้เหลือเงินกลับบ้าน <b>{D} บาท</b> จงหาว่าตอนแรกมีเงินกี่บาท?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (ย้อนกลับผสมเศษส่วนและจำนวนเต็ม):</b><br>
@@ -993,12 +801,8 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                 else:
                     f1_n, f1_d = random.choice([(2,5), (3,5), (1,4), (3,4), (2,7)]); f2_n, f2_d = random.choice([(1,3), (2,3), (1,2), (3,8), (1,4)]); k = random.choice([50, 100, 150, 200])
                     lcm_den = f1_d * f2_d; tot = k * lcm_den; spent1 = (tot * f1_n) // f1_d; rem1 = tot - spent1; spent2 = (rem1 * f2_n) // f2_d; ans = rem1 - spent2
-                    
-                    f1_html = get_vertical_fraction(f1_n, f1_d)
-                    f2_html = get_vertical_fraction(f2_n, f2_d)
-                    
-                    f1_html_s = get_vertical_fraction(f1_n, f1_d, is_bold=False)
-                    f2_html_s = get_vertical_fraction(f2_n, f2_d, is_bold=False)
+                    f1_html = get_vertical_fraction(f1_n, f1_d); f2_html = get_vertical_fraction(f2_n, f2_d)
+                    f1_html_s = get_vertical_fraction(f1_n, f1_d, is_bold=False); f2_html_s = get_vertical_fraction(f2_n, f2_d, is_bold=False)
                     
                     q = f"<b>{name}</b> มีเงินอยู่ {tot:,} บาท นำไปซื้อขนม <b>{f1_html}</b> ของเงินทั้งหมด และนำไปซื้อ<b>{item}</b>อีก <b>{f2_html} ของเงินที่เหลือ</b> <br>จงหาว่าตอนนี้ <b>{name}</b> เหลือเงินกี่บาท?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
@@ -1014,8 +818,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 นำเงินคงเหลือรอบแรกลบด้วยเงินที่จ่ายไปในรอบที่สอง: {rem1:,} - {spent2:,} = <b>{ans:,} บาท</b><br>
                     <b>ตอบ: {ans:,} บาท</b></span>"""
 
-            # ---------------------------------------------------------
-            # 21. ปริศนาตัวเลขซ่อนแอบ
             # ---------------------------------------------------------
             elif actual_sub_t == "ปริศนาตัวเลขซ่อนแอบ":
                 a = random.randint(1, 4); b = random.randint(a + 2, 9); diff = b - a; k = diff * 9; sum_val = a + b
@@ -1047,8 +849,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: จำนวน AB คือ {a}{b}</b></span>"""
 
             # ---------------------------------------------------------
-            # 22. การตัดเชือกพับทบ
-            # ---------------------------------------------------------
             elif actual_sub_t == "การตัดเชือกพับทบ":
                 name = random.choice(NAMES)
                 if is_challenge:
@@ -1076,8 +876,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     &nbsp;&nbsp;&nbsp;👉 รวมกับเส้นตั้งต้นที่มีอยู่แล้ว 1 เส้น: {(2**f)*c} + 1 = <b>{ans} เส้น</b><br>
                     <b>ตอบ: {ans} เส้น</b></span>"""
 
-            # ---------------------------------------------------------
-            # 23. อายุข้ามเวลาขั้นสูง
             # ---------------------------------------------------------
             elif actual_sub_t == "อายุข้ามเวลาขั้นสูง":
                 n1, n2, n3 = random.sample(NAMES, 3)
@@ -1108,8 +906,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {past_sum} ปี</b></span>"""
 
             # ---------------------------------------------------------
-            # 24. ความเร็ววิ่งสวนทาง
-            # ---------------------------------------------------------
             elif actual_sub_t == "ความเร็ววิ่งสวนทาง":
                 veh = random.choice(VEHICLES)
                 if is_challenge:
@@ -1136,26 +932,16 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {t} ชั่วโมง</b></span>"""
 
             # ---------------------------------------------------------
-            # 25. งานและเวลา (Work)
-            # ---------------------------------------------------------
             elif actual_sub_t == "งานและเวลา (Work)":
                 action = random.choice(WORK_ACTIONS)
                 if is_challenge:
                     n1, n2, n3 = random.sample(NAMES, 3); pairs = [(10, 12, 15, 4), (12, 15, 20, 5), (6, 10, 15, 3), (12, 24, 8, 4)]
                     w1, w2, w3, ans = random.choice(pairs)
-                    
-                    f1_s = get_vertical_fraction(1, w1, is_bold=False)
-                    f2_s = get_vertical_fraction(1, w2, is_bold=False)
-                    f3_s = get_vertical_fraction(1, w3, is_bold=False)
-                    
+                    f1_s = get_vertical_fraction(1, w1, is_bold=False); f2_s = get_vertical_fraction(1, w2, is_bold=False); f3_s = get_vertical_fraction(1, w3, is_bold=False)
                     lcm_val = lcm_multiple(w1, w2, w3)
                     sum_num = (lcm_val//w1) + (lcm_val//w2) + (lcm_val//w3)
-                    
-                    f_sum1 = get_vertical_fraction(lcm_val//w1, lcm_val, is_bold=False)
-                    f_sum2 = get_vertical_fraction(lcm_val//w2, lcm_val, is_bold=False)
-                    f_sum3 = get_vertical_fraction(lcm_val//w3, lcm_val, is_bold=False)
+                    f_sum1 = get_vertical_fraction(lcm_val//w1, lcm_val, is_bold=False); f_sum2 = get_vertical_fraction(lcm_val//w2, lcm_val, is_bold=False); f_sum3 = get_vertical_fraction(lcm_val//w3, lcm_val, is_bold=False)
                     f_total = get_vertical_fraction(sum_num, lcm_val, is_bold=True)
-                    
                     f_ans = get_vertical_fraction(1, ans, is_bold=False)
                     
                     q = f"ในการ<b>{action}</b> หากให้ <b>{n1}</b> ทำคนเดียวจะเสร็จใน {w1} วัน, <b>{n2}</b> ทำคนเดียวเสร็จใน {w2} วัน, และ <b>{n3}</b> ทำคนเดียวเสร็จใน {w3} วัน<br>จงหาว่าถ้าทั้งสามคน 'ช่วยกันทำพร้อมกัน' งานนี้จะเสร็จภายในเวลากี่วัน?"
@@ -1184,8 +970,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: {ans} วัน</b></span>"""
 
             # ---------------------------------------------------------
-            # 26. ระฆังและไฟกะพริบ (ค.ร.น.)
-            # ---------------------------------------------------------
             elif actual_sub_t == "ระฆังและไฟกะพริบ (ค.ร.น.)":
                 item_word = random.choice(["สัญญาณไฟ", "นาฬิกาปลุก", "ระฆัง"])
                 if is_challenge:
@@ -1193,7 +977,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     lcm = lcm_multiple(l1, l2, l3, l4)
                     ans_min = lcm // 60; ans_sec = lcm % 60
                     text_ans = f"{ans_min} นาที" if ans_sec == 0 else f"{ans_min} นาที {ans_sec} วินาที"
-                    
                     q = f"<b>{item_word} 4 ชิ้น</b> ทำงานด้วยจังหวะที่ต่างกัน ดังนี้:<br>ชิ้นที่ 1 ดังทุกๆ {l1} วินาที, ชิ้นที่ 2 ดังทุกๆ {l2} วินาที, ชิ้นที่ 3 ดังทุกๆ {l3} วินาที, และชิ้นที่ 4 ดังทุกๆ {l4} วินาที <br>ถ้าเพิ่งดังพร้อมกันไป อีกกี่นาทีข้างหน้าจึงจะดังพร้อมกันอีกครั้ง?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (หา ค.ร.น. ขั้นสูง):</b><br>
                     โจทย์ที่มีคำว่า "เกิดขึ้นพร้อมกันอีกครั้ง" ให้ใช้การหา ค.ร.น. (คูณร่วมน้อย)<br>
@@ -1214,14 +997,11 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: อีก {lcm} วินาที</b></span>"""
 
             # ---------------------------------------------------------
-            # 27. นาฬิกาเดินเพี้ยน
-            # ---------------------------------------------------------
             elif actual_sub_t == "นาฬิกาเดินเพี้ยน":
                 if is_challenge:
                     days_map = {"พฤหัสบดี": 3, "ศุกร์": 4, "เสาร์": 5}; end_day = random.choice(list(days_map.keys())); days = days_map[end_day]
                     gain_m = random.randint(3, 12); total_gain = days * gain_m
                     carry_h = total_gain // 60; final_m = total_gain % 60; final_h = 8 + carry_h
-                    
                     q = f"นาฬิกาเรือนหนึ่งทำงานผิดปกติ โดยจะเดิน <b>'เร็วเกินไป' วันละ {gain_m} นาที</b><br>ถ้าตั้งเวลานาฬิกาเรือนนี้ให้ตรงเป๊ะในตอน <b>08:00 น. ของวันจันทร์</b><br>จงหาว่าเมื่อเวลาจริงดำเนินไปถึง <b>08:00 น. ของวัน{end_day}</b> นาฬิกาเรือนนี้จะชี้บอกเวลาใด?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step (คำนวณความคลาดเคลื่อนสะสม):</b><br>
                     <b>ขั้นตอนที่ 1: หาจำนวนวันที่ผ่านไปทั้งหมด</b><br>
@@ -1234,7 +1014,6 @@ def generate_questions_logic(level, sub_t, num_q, is_challenge):
                     <b>ตอบ: เวลา {final_h:02d}:{final_m:02d} น.</b></span>"""
                 else:
                     fast_min = random.randint(3, 8); start_h = 8; passed_hours = random.randint(5, 12); end_h = start_h + passed_hours; total_fast = fast_min * passed_hours
-                    
                     q = f"นาฬิกาเรือนหนึ่งเดินเร็วไป <b>{fast_min} นาที ในทุกๆ 1 ชั่วโมง</b> <br>ตั้งเวลาตรงตอน <b>0{start_h}:00 น.</b> เมื่อเวลาจริงผ่านไปถึง <b>{end_h}:00 น.</b> นาฬิกาจะแสดงเวลาใด?"
                     sol = f"""<span style='color:#2c3e50;'><b>วิธีคิดวิเคราะห์แบบ Step-by-Step:</b><br>
                     <b>ขั้นตอนที่ 1: หาจำนวนชั่วโมงที่ผ่านไป</b><br>
@@ -1267,38 +1046,131 @@ def extract_body(html_str):
 def create_page(level, sub_t, questions, is_key=False, q_margin="20px", ws_height="180px", brand_name="", is_challenge=False):
     title_suffix = " 🔥 [ULTIMATE CHALLENGE]" if is_challenge else ""
     title = f"เฉลย (Answer Key){title_suffix}" if is_key else f"ข้อสอบ (TMC Edition){title_suffix}"
-    html = f"""<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><style>@page {{ size: A4; margin: 15mm; }} body {{ font-family: 'Sarabun', sans-serif; padding: 20px; color: #333; line-height: 1.6; }} .q-box {{ margin-bottom: {q_margin}; padding: 10px; page-break-inside: avoid; font-size: 20px; }} .sol-text {{ background: #f9f9f9; border-left: 5px solid #8e44ad; padding: 15px; margin-top: 10px; font-size: 18px; }} .workspace {{ height: {ws_height}; border: 1px dashed #ccc; margin: 10px 0; background: #fcfcfc; }}</style></head><body><div style="text-align:center; margin-bottom:20px;"><h2>{title}</h2><p>{sub_t} ({level})</p></div>"""
+    
+    student_info = """
+        <table style="width: 100%; margin-bottom: 10px; font-size: 18px; border-collapse: collapse;">
+            <tr>
+                <td style="width: 1%; white-space: nowrap; padding-right: 5px;"><b>ชื่อ-สกุล</b></td>
+                <td style="border-bottom: 2px dotted #999; width: 60%;"></td>
+                <td style="width: 1%; white-space: nowrap; padding-left: 20px; padding-right: 5px;"><b>ระดับชั้น</b></td>
+                <td style="border-bottom: 2px dotted #999; width: 15%;"></td>
+                <td style="width: 1%; white-space: nowrap; padding-left: 20px; padding-right: 5px;"><b>เลขที่</b></td>
+                <td style="border-bottom: 2px dotted #999; width: 15%;"></td>
+            </tr>
+        </table>
+        """ if not is_key else ""
+        
+    html = f"""<!DOCTYPE html><html lang="th"><head><meta charset="utf-8">
+    <style>
+        @page {{ size: A4; margin: 15mm; }}
+        body {{ font-family: 'Sarabun', sans-serif; padding: 20px; line-height: 1.6; color: #333; }}
+        .header {{ text-align: center; border-bottom: 2px solid #333; margin-bottom: 10px; padding-bottom: 10px; }}
+        .header h2 {{ color: {'#c0392b' if is_challenge else '#8e44ad'}; }}
+        .q-box {{ margin-bottom: {q_margin}; padding: 10px 15px; page-break-inside: avoid; font-size: 20px; line-height: 1.8; }}
+        .workspace {{ height: {ws_height}; border: 2px dashed #bdc3c7; border-radius: 8px; margin: 15px 0; padding: 10px; color: #95a5a6; font-size: 16px; background-color: #fafbfc; }}
+        .ans-line {{ margin-top: 10px; border-bottom: 1px dotted #999; width: 80%; height: 30px; font-weight: bold; font-size: 20px; display: flex; align-items: flex-end; padding-bottom: 5px; }}
+        .sol-text {{ color: #333; font-size: 18px; display: block; margin-top: 15px; padding: 15px; background-color: #f5eef8; border-left: 4px solid {'#c0392b' if is_challenge else '#8e44ad'}; border-radius: 4px; line-height: 1.8; }}
+        .page-footer {{ text-align: right; font-size: 14px; color: #95a5a6; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }}
+    </style></head><body>
+    <div class="header"><h2>{title}</h2><p><b>หมวดหมู่:</b> {sub_t} ({level})</p></div>
+    {student_info}"""
+    
     for i, item in enumerate(questions, 1):
-        html += f'<div class="q-box"><b>ข้อที่ {i}.</b> {item["question"]}'
-        if is_key: html += f'<div class="sol-text">{item["solution"]}</div>'
-        else: html += f'<div class="workspace"></div><div style="font-weight:bold; font-size: 20px;">ตอบ: ............................</div>'
+        html += f'<div class="q-box"><b>ข้อที่ {i}.</b> '
+        if is_key:
+            html += f'{item["question"]}<div class="sol-text">{item["solution"]}</div>'
+        else:
+            html += f'{item["question"]}<div class="workspace">พื้นที่สำหรับแสดงวิธีคิดวิเคราะห์...</div><div class="ans-line">ตอบ: </div>'
         html += '</div>'
+        
+    if brand_name: 
+        html += f'<div class="page-footer">&copy; 2026 {brand_name} | สงวนลิขสิทธิ์</div>'
+        
     return html + "</body></html>"
 
 def generate_cover_html(level, sub_t, num_q, brand_name, is_challenge):
     theme_color = "#8e44ad" if not is_challenge else "#c0392b"
     badge_text = "🔥 ULTIMATE CHALLENGE MODE" if is_challenge else "(TMC Edition)"
-    return f"""<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><style>.cover-inner {{ width: 100%; height: 100%; padding: 40px; box-sizing: border-box; text-align: center; position: relative; border: 15px solid {theme_color}; background: white; }} .title-box {{ margin-top: 80px; }} .title {{ font-size: 65px; color: #2c3e50; font-weight: bold; margin: 0; line-height: 1.2; }} .grade-badge {{ font-size: 40px; background-color: #f1c40f; color: #333; padding: 15px 50px; border-radius: 50px; display: inline-block; font-weight: bold; margin-top: 30px; }} .topic {{ font-size: 42px; color: #34495e; margin-top: 70px; font-weight: bold; }} .sub-topic {{ font-size: 32px; color: {theme_color}; margin-top: 10px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);}} .icons {{ font-size: 110px; margin: 60px 0; }} .details-badge {{ background-color: {theme_color}; color: white; display: inline-block; padding: 15px 40px; border-radius: 15px; font-size: 32px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}} .footer {{ position: absolute; bottom: 40px; left: 0; width: 100%; text-align: center; font-size: 22px; color: #7f8c8d; }}</style></head><body><div class="cover-inner"><div class="title-box"><h1 class="title">ข้อสอบวิเคราะห์คณิตศาสตร์</h1><div class="grade-badge">{level}</div></div><div class="topic">เรื่อง: {sub_t}</div><div class="sub-topic">{badge_text}</div><div class="icons">{'⚔️ 🧠 🏆 🚀' if is_challenge else '🏆 🥇 🧠 💡'}</div><div class="details-badge">รวมทั้งหมด {num_q} ข้อ (พร้อมเฉลยละเอียด)</div><div class="footer"><b>ออกแบบและจัดทำโดย:</b> {brand_name}</div></div></body></html>"""
+    
+    return f"""<!DOCTYPE html><html lang="th"><head><meta charset="utf-8">
+    <style>
+        .cover-inner {{ width: 100%; height: 100%; padding: 40px; box-sizing: border-box; text-align: center; position: relative; border: 15px solid {theme_color}; background: white; }}
+        .title-box {{ margin-top: 80px; }}
+        .title {{ font-size: 65px; color: #2c3e50; font-weight: bold; margin: 0; line-height: 1.2; }}
+        .grade-badge {{ font-size: 40px; background-color: #f1c40f; color: #333; padding: 15px 50px; border-radius: 50px; display: inline-block; font-weight: bold; margin-top: 30px; }}
+        .topic {{ font-size: 42px; color: #34495e; margin-top: 70px; font-weight: bold; }}
+        .sub-topic {{ font-size: 32px; color: {theme_color}; margin-top: 10px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);}}
+        .icons {{ font-size: 110px; margin: 60px 0; }}
+        .details-badge {{ background-color: {theme_color}; color: white; display: inline-block; padding: 15px 40px; border-radius: 15px; font-size: 32px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}}
+        .footer {{ position: absolute; bottom: 40px; left: 0; width: 100%; text-align: center; font-size: 22px; color: #7f8c8d; }}
+    </style></head><body>
+    <div class="cover-inner">
+        <div class="title-box">
+            <h1 class="title">ข้อสอบวิเคราะห์คณิตศาสตร์</h1>
+            <div class="grade-badge">{level}</div>
+        </div>
+        <div class="topic">เรื่อง: {sub_t}</div>
+        <div class="sub-topic">{badge_text}</div>
+        <div class="icons">{'⚔️ 🧠 🏆 🚀' if is_challenge else '🏆 🥇 🧠 💡'}</div>
+        <div class="details-badge">รวมทั้งหมด {num_q} ข้อ (พร้อมเฉลยละเอียด)</div>
+        <div class="footer"><b>ออกแบบและจัดทำโดย:</b> {brand_name}</div>
+    </div>
+    </body></html>"""
 
-# --- Sidebar ---
-st.sidebar.title("⚙️ ตั้งค่าระบบ")
-selected_level = st.sidebar.selectbox("🏆 ระดับชั้น:", list(comp_db.keys()))
-selected_sub = st.sidebar.selectbox("📝 หัวข้อ:", comp_db[selected_level] + ["🌟 สุ่มรวมทุกแนวแข่งขัน"])
-num_input = st.sidebar.number_input("🔢 จำนวนข้อ:", 1, 100, 10)
-is_challenge = st.sidebar.toggle("🔥 โหมด Challenge (ระดับโอลิมปิก)", False)
-spacing_level = st.sidebar.select_slider("↕️ ความสูงของพื้นที่ทดเลข:", options=["แคบ", "ปานกลาง", "กว้าง", "กว้างพิเศษ"], value="กว้าง")
+# ==========================================
+# 4. Streamlit UI (Sidebar & Result Grouping)
+# ==========================================
+st.sidebar.markdown("## ⚙️ พารามิเตอร์การสร้างข้อสอบ")
+
+selected_level = st.sidebar.selectbox("🏆 เลือกระดับชั้น:", list(comp_db.keys()))
+sub_options = comp_db[selected_level]
+selected_sub = st.sidebar.selectbox("📝 เลือกแนวข้อสอบ (พร้อมเฉลยละเอียด):", sub_options + ["🌟 สุ่มรวมทุกแนวแข่งขัน"])
+
+num_input = st.sidebar.number_input("🔢 จำนวนข้อ:", min_value=1, max_value=100, value=10)
+
+st.sidebar.markdown("---")
+is_challenge = st.sidebar.toggle("🔥 โหมด Challenge (ระดับยากพิเศษสำหรับเด็กเก่ง)", value=False)
+
+if is_challenge:
+    st.markdown("""
+    <script>
+        const header = window.parent.document.querySelector('.main-header');
+        if(header) { header.classList.add('challenge'); header.querySelector('span').innerText = '🔥 Ultimate Challenge Mode'; header.querySelector('span').style.background = '#e74c3c'; header.querySelector('span').style.color = '#fff'; }
+    </script>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <script>
+        const header = window.parent.document.querySelector('.main-header');
+        if(header) { header.classList.remove('challenge'); header.querySelector('span').innerText = 'TMC Edition'; header.querySelector('span').style.background = '#f1c40f'; header.querySelector('span').style.color = '#333'; }
+    </script>
+    """, unsafe_allow_html=True)
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 📏 ตั้งค่าหน้ากระดาษ")
+spacing_level = st.sidebar.select_slider(
+    "↕️ ความสูงของพื้นที่ทดเลข:", 
+    options=["แคบ", "ปานกลาง", "กว้าง", "กว้างพิเศษ"], 
+    value="กว้าง"
+)
+
 if spacing_level == "แคบ": q_margin, ws_height = "15px", "100px"
 elif spacing_level == "ปานกลาง": q_margin, ws_height = "20px", "180px"
 elif spacing_level == "กว้าง": q_margin, ws_height = "30px", "280px"
 else: q_margin, ws_height = "40px", "400px"
-brand_name = st.sidebar.text_input("🏷️ แบรนด์:", "บ้านทีเด็ด")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🎨 ตั้งค่าแบรนด์ & หน้าปก")
+brand_name = st.sidebar.text_input("🏷️ ชื่อแบรนด์ / ผู้สอน:", value="บ้านทีเด็ด")
 include_cover = st.sidebar.checkbox("🎨 สร้างหน้าปก", value=True)
 
-if st.sidebar.button("🚀 สร้างข้อสอบทันที", type="primary", use_container_width=True):
-    with st.spinner("ประมวลผลตรรกะและจัดทำไฟล์..."):
+if st.sidebar.button(f"{'🚀 สั่งสร้างข้อสอบระดับ Ultimate Challenge!' if is_challenge else '🚀 สั่งสร้างข้อสอบแข่งขันเดี๋ยวนี้'}", type="primary", use_container_width=True):
+    with st.spinner("กำลังประมวลผลตรรกะระดับการแข่งขันและออกแบบการแสดงผล..."):
+        
         qs = generate_questions_logic(selected_level, selected_sub, num_input, is_challenge)
-        html_w = create_page(selected_level, selected_sub, qs, False, q_margin, ws_height, brand_name, is_challenge)
-        html_k = create_page(selected_level, selected_sub, qs, True, q_margin, ws_height, brand_name, is_challenge)
+        
+        html_w = create_page(selected_level, selected_sub, qs, is_key=False, q_margin=q_margin, ws_height=ws_height, brand_name=brand_name, is_challenge=is_challenge)
+        html_k = create_page(selected_level, selected_sub, qs, is_key=True, q_margin=q_margin, ws_height=ws_height, brand_name=brand_name, is_challenge=is_challenge)
         html_cover = generate_cover_html(selected_level, selected_sub, num_input, brand_name, is_challenge) if include_cover else ""
         
         st.session_state['worksheet_html'] = html_w
@@ -1307,9 +1179,10 @@ if st.sidebar.button("🚀 สร้างข้อสอบทันที", ty
         ebook_body = ""
         if include_cover: ebook_body += f'\n<div class="a4-wrapper cover-wrapper">{extract_body(html_cover)}</div>\n'
         ebook_body += f'\n<div class="a4-wrapper">{extract_body(html_w)}</div>\n<div class="a4-wrapper">{extract_body(html_k)}</div>\n'
+        
         bg_color = "#2c3e50" if is_challenge else "#525659"
         
-        full_ebook_html = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet"><style>@page {{ size: A4; margin: 15mm; }} @media screen {{ body {{ font-family: 'Sarabun', sans-serif; background-color: {bg_color}; display: flex; flex-direction: column; align-items: center; padding: 40px 0; margin: 0; }} .a4-wrapper {{ width: 210mm; min-height: 297mm; background: white; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); padding: 15mm; box-sizing: border-box; }} .cover-wrapper {{ padding: 0; }} }} @media print {{ body {{ font-family: 'Sarabun', sans-serif; background: transparent; padding: 0; display: block; margin: 0; }} .a4-wrapper {{ width: 100%; min-height: auto; margin: 0; padding: 0; box-shadow: none; page-break-after: always; }} .cover-wrapper {{ height: 260mm; }} }} .header {{ text-align: center; border-bottom: 2px solid #333; margin-bottom: 10px; padding-bottom: 10px; }} .header h2 {{ color: {'#c0392b' if is_challenge else '#8e44ad'}; }} .q-box {{ margin-bottom: {q_margin}; padding: 10px 15px; page-break-inside: avoid; font-size: 20px; line-height: 1.8; }} .workspace {{ height: {ws_height}; border: 2px dashed #bdc3c7; border-radius: 8px; margin: 15px 0; padding: 10px; color: #95a5a6; font-size: 16px; background-color: #fafbfc; }} .ans-line {{ margin-top: 10px; border-bottom: 1px dotted #999; width: 80%; height: 30px; font-weight: bold; font-size: 20px; display: flex; align-items: flex-end; padding-bottom: 5px; }} .sol-text {{ color: #333; font-size: 18px; display: block; margin-top: 15px; padding: 15px; background-color: #f5eef8; border-left: 4px solid {'#c0392b' if is_challenge else '#8e44ad'}; border-radius: 4px; line-height: 1.8; }} .page-footer {{ text-align: right; font-size: 14px; color: #95a5a6; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }}</style></head><body>{ebook_body}</body></html>"""
+        full_ebook_html = f"""<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet"><style>@page {{ size: A4; margin: 15mm; }} @media screen {{ body {{ font-family: 'Sarabun', sans-serif; background-color: {bg_color}; display: flex; flex-direction: column; align-items: center; padding: 40px 0; margin: 0; }} .a4-wrapper {{ width: 210mm; min-height: 297mm; background: white; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); padding: 15mm; box-sizing: border-box; }} .cover-wrapper {{ padding: 0; }} }} @media print {{ body {{ font-family: 'Sarabun', sans-serif; background: transparent; padding: 0; display: block; margin: 0; }} .a4-wrapper {{ width: 100%; min-height: auto; margin: 0; padding: 0; box-shadow: none; page-break-after: always; }} .cover-wrapper {{ height: 260mm; }} }} .header {{ text-align: center; border-bottom: 2px solid #333; margin-bottom: 10px; padding-bottom: 10px; }} .header h2 {{ color: {'#c0392b' if is_challenge else '#8e44ad'}; }} .q-box {{ margin-bottom: {q_margin}; padding: 10px 15px; page-break-inside: avoid; font-size: 20px; line-height: 1.8; }} .workspace {{ height: {ws_height}; border: 2px dashed #bdc3c7; border-radius: 8px; margin: 15px 0; padding: 10px; color: #95a5a6; font-size: 16px; background-color: #fafbfc; }} .ans-line {{ margin-top: 10px; border-bottom: 1px dotted #999; width: 80%; height: 30px; font-weight: bold; font-size: 20px; display: flex; align-items: flex-end; padding-bottom: 5px; }} .sol-text {{ color: #333; font-size: 18px; display: block; margin-top: 15px; padding: 15px; background-color: #f5eef8; border-left: 4px solid {'#c0392b' if is_challenge else '#8e44ad'}; border-radius: 4px; line-height: 1.8; }} .page-footer {{ text-align: right; font-size: 14px; color: #95a5a6; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }} .cover-inner {{ width: 100%; height: 100%; padding: 40px; box-sizing: border-box; text-align: center; position: relative; border: 15px solid {'#c0392b' if is_challenge else '#8e44ad'}; background: white; }} .title-box {{ margin-top: 80px; }} .title {{ font-size: 65px; color: #2c3e50; font-weight: bold; margin: 0; line-height: 1.2; }} .grade-badge {{ font-size: 40px; background-color: #f1c40f; color: #333; padding: 15px 50px; border-radius: 50px; display: inline-block; font-weight: bold; margin-top: 30px; }} .topic {{ font-size: 42px; color: #34495e; margin-top: 70px; font-weight: bold; }} .sub-topic {{ font-size: 32px; color: {'#c0392b' if is_challenge else '#8e44ad'}; margin-top: 10px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);}} .icons {{ font-size: 110px; margin: 60px 0; }} .details-badge {{ background-color: {'#c0392b' if is_challenge else '#8e44ad'}; color: white; display: inline-block; padding: 15px 40px; border-radius: 15px; font-size: 32px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}} .footer {{ position: absolute; bottom: 40px; left: 0; width: 100%; text-align: center; font-size: 22px; color: #7f8c8d; }} </style></head><body>{ebook_body}</body></html>"""
 
         mode_name = "Challenge" if is_challenge else "Normal"
         safe_sub = selected_sub.replace(" ", "_").replace("(", "").replace(")", "").replace("/", "_")
@@ -1326,7 +1199,7 @@ if st.sidebar.button("🚀 สร้างข้อสอบทันที", ty
         st.session_state['zip_data'] = zip_buffer.getvalue()
 
 if 'ebook_html' in st.session_state:
-    st.success(f"✅ สร้างไฟล์ข้อสอบสำเร็จ! ตรวจสอบความถูกต้องสมบูรณ์แบบ 100% (โค้ดเต็มไม่มีการตัดทอน) {'(🔥 โหมดตัวตึง Ultimate Challenge!)' if 'Challenge' in st.session_state['filename_base'] else ''}")
+    st.success(f"✅ สร้างไฟล์ข้อสอบสำเร็จ! ตรวจสอบโค้ดฉบับสมบูรณ์ (แปลงเศษส่วนและขยายวิธีคิดแบบละเอียด 100%) แล้วครับ")
     c1, c2 = st.columns(2)
     with c1:
         st.download_button("📄 โหลดเฉพาะโจทย์", data=st.session_state['worksheet_html'], file_name=f"{st.session_state['filename_base']}_Worksheet.html", mime="text/html", use_container_width=True)
